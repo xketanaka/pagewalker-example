@@ -1,0 +1,7 @@
+{
+  "browser": "puppeteer",
+  "exitImmediately": false,
+  "puppeteer": {
+    "headless": false
+  }
+}

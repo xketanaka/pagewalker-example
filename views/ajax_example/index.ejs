@@ -1,0 +1,29 @@
+<h1>Ajax </h1>
+<div class="content">
+  <p>this is a ajax example, click button below.</p>
+  <div class="square">
+    <button id="btn-get">Send Ajax Request(GET)</button>
+  </div>
+  <div class="square">
+    <p><input type="text" name="nickname" placeholder="nickname"></p>
+    <p>
+      <label><input type="radio" name="sex" value="male">male</label>
+      <label><input type="radio" name="sex" value="female">female</label>
+    </p>
+    <button id="btn-post">Send Ajax Request(POST)</button>
+  </div>
+  <div id="ajax-result" class="square bg-grey" >
+    <h3>ajax result</h3>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll("#btn-get").addEventListener('click', (e)=>{
+    XMLHttpRequest.new.open("/ajax_example/get_content")
+  })
+  document.querySelectorAll("#btn-get").addEventListener('click', (e)=>{
+    XMLHttpRequest.new.open("/ajax_example/post_content")
+  })
+});
+</script>

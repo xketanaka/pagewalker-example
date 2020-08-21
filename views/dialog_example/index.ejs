@@ -1,0 +1,45 @@
+<style>
+form > div { margin-top: 10px; }
+</style>
+<h1>Dialog </h1>
+<div class="content">
+  <form action="/dialog_example" method="POST">
+    <p>this is a dialog(alert, confirm) example.</p>
+    <div>
+      <input type="button" data-dialog-type='alert' data-dialog-msg='This is a message.' value="alert(1)">
+      <span>popup "alert" dialog.</span>
+    </div>
+    <div>
+      <input type="submit" name="submit" data-dialog-type='alert' data-dialog-msg='This is a message.' value="alert(2)">
+      <span>Popup "alert" dialog, and submit after having clicked "OK"</span>
+    </div>
+    <div>
+      <input type="button" data-dialog-type='confirm' data-dialog-msg='Are your OK?' value="confirm(1)">
+      <span>popup "confirm" dialog.</span>
+    </div>
+    <div>
+      <input type="submit" name="submit" data-dialog-type='confirm' data-dialog-msg='Are your OK?' value="confirm(2)">
+      <span>Popup "confirm" dialog, and submit after having clicked "OK"</span>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  Array.from(document.querySelectorAll("div.content input[data-dialog-type]")).forEach((btn)=>{
+    btn.addEventListener('click', (e)=>{
+      if(btn.attributes["data-dialog-type"].value == 'confirm'){
+        if(!confirm(btn.attributes["data-dialog-msg"].value)){
+          e.preventDefault();
+          return;
+        }
+      }else{
+        alert(btn.attributes["data-dialog-msg"].value);
+      }
+      if(btn.attributes["type"].value == 'submit'){
+
+      }
+    })
+  })
+});
+</script>
