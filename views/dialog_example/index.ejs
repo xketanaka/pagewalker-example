@@ -14,14 +14,19 @@ form > div { margin-top: 10px; }
       <span>Popup "alert" dialog, and submit after having clicked "OK"</span>
     </div>
     <div>
-      <input type="button" data-dialog-type='confirm' data-dialog-msg='Are your OK?' value="confirm(1)">
+      <input type="button" data-dialog-type='confirm' data-dialog-msg='Are you OK?' value="confirm(1)">
       <span>popup "confirm" dialog.</span>
     </div>
     <div>
-      <input type="submit" name="submit" data-dialog-type='confirm' data-dialog-msg='Are your OK?' value="confirm(2)">
+      <input type="submit" name="submit" data-dialog-type='confirm' data-dialog-msg='Are you OK?' value="confirm(2)">
       <span>Popup "confirm" dialog, and submit after having clicked "OK"</span>
     </div>
   </form>
+  <div style="margin-top: 20px">
+    <h4>Clicked button on Confirm Dialog</h4>
+    <div id="clicked-button-result">
+    </div>
+  </div>
 </div>
 
 <script>
@@ -29,15 +34,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
   Array.from(document.querySelectorAll("div.content input[data-dialog-type]")).forEach((btn)=>{
     btn.addEventListener('click', (e)=>{
       if(btn.attributes["data-dialog-type"].value == 'confirm'){
-        if(!confirm(btn.attributes["data-dialog-msg"].value)){
+        let result = confirm(btn.attributes["data-dialog-msg"].value)
+        document.querySelector("div#clicked-button-result").innerHTML = result ? "OK" : "Cancel";
+        if(!result){
           e.preventDefault();
           return;
         }
       }else{
         alert(btn.attributes["data-dialog-msg"].value);
-      }
-      if(btn.attributes["type"].value == 'submit'){
-
       }
     })
   })

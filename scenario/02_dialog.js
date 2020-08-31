@@ -1,37 +1,79 @@
 const {page} = require('pagewalker');
 const assert = require('assert');
 
-describe("01.BrowsePage", ()=>{
+describe("02.Dialog Example", ()=>{
 
   it("1. Load dialog example page.", async ()=>{
-    try {
-      await page.load("http://localhost:3000");
-      page.openDevTools();
+    await page.load("http://localhost:3000");
 
-    }catch(e){
-      console.log("------------------------!!!!!!!!");
-      console.log(e.toString().split("\n").slice(0, 10).join("\n"));
-    }
-  })
-  it("2.", async () =>{
-    try {
+    await page.waitForPageLoad(async ()=>{
       await page.find("a").haveContent("Dialog").click();
+    })
+  })
 
-      await page.waitForPageLoad();
-
-console.log(`2.page.url: ${page.url}`);
-    }catch(e){
-      console.log("Oh,,, -----------------------------------------------!!!!!!!!");
-      console.log(e.toString().split("\n").slice(0, 10).join("\n"));
-    }
-  });
-
-  it("3. click a button with popping up 'alert' dialog", async ()=>{
-
-console.log(`3.page.url: ${page.url}`);
-
+  it("2. Popup alert dialog.", async () =>{
     await page.waitForAlert({ message: 'This is a message.' }, async ()=>{
       await page.find("input[type=button]").haveValue("alert(1)").click();
     })
   });
+
+  xit("3. Timeout alert dialog (message is different).", async () =>{
+    try{
+      await page.waitForAlert({ message: 'This is another message.' }, async ()=>{
+        await page.find("input[type=button]").haveValue("alert(1)").click();
+      })
+      assert.fail('Error should raised.')
+    }catch(e){
+      assert.equal(e.message, 'timeout');
+    }
+  });
+
+  it("4. Popup alert dialog, and submit.", async () =>{
+    await page.waitForPageLoad(async ()=>{
+      await page.waitForAlert({ message: 'This is a message.' }, async ()=>{
+        await page.find("input[type=submit]").haveValue("alert(2)").click();
+      })
+    })
+
+    assert(await page.find("div.message").haveText('Submitted by "alert" button clicked.').exist());
+  });
+
+  it("5. Popup confirm dialog, Cancel.", async () =>{
+    await page.waitForConfirm({ message: 'Are you OK?', isClickOK: false }, async ()=>{
+      await page.find("input[type=button]").haveValue("confirm(1)").click();
+    });
+
+     assert.equal(await page.find("div#clicked-button-result").text(), 'Cancel');
+  });
+
+  it("6. Popup confirm dialog, OK.", async () =>{
+    await page.waitForConfirm({ message: 'Are you OK?', isClickOK: true }, async ()=>{
+      await page.find("input[type=button]").haveValue("confirm(1)").click();
+    });
+
+     assert.equal(await page.find("div#clicked-button-result").text(), 'OK');
+  });
+
+  xit("7. Timeout confirm dialog (message is different).", async () =>{
+    try{
+      await page.waitForConfirm({ message: 'Are you ready?', isClickOK: false }, async ()=>{
+        await page.find("input[type=button]").haveValue("confirm(1)").click();
+      });
+      assert.fail('Error should raised.')
+    }catch(e){
+      assert.equal(e.message, 'timeout');
+    }
+  });
+
+  it("8. Popup confirm dialog, and submit.", async () =>{
+    await page.waitForPageLoad(async ()=>{
+      await page.waitForConfirm({ message: 'Are you OK?', isClickOK: true }, async ()=>{
+        await page.find("input[type=submit]").haveValue("confirm(2)").click();
+      });
+    });
+
+    assert(await page.find("div.message").haveText('Submitted by "confirm" button clicked.').exist());
+  });
+
+
 });

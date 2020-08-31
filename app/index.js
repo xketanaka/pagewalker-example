@@ -8,6 +8,7 @@ const routes = [
   require('./routes/login'),
   require('./routes/form_input_example'),
   require('./routes/window_open_example'),
+  require('./routes/ajax_example'),
   require('./routes/dialog_example'),
 ];
 
@@ -15,12 +16,6 @@ const ActionMethods = {
   GET: {
     "/": (req, res)=>{
       res.renderLayout('index');
-    },
-    "/ajax_example": (req, res)=>{
-      res.renderLayout("/ajax_example/index")
-    },
-    "/ajax_example/get_content": (req, res)=>{
-      // TODO
     },
     "/iframe_example": (req, res)=>{
       res.renderLayout("/iframe_example")
@@ -39,10 +34,7 @@ const ActionMethods = {
     }
   },
   POST: {
-    "/ajax_example/post_content": (req, res)=>{
-      // TODO
-    },
-  },
+  }
 };
 
 routes.forEach((methods)=>{
@@ -77,6 +69,7 @@ class WebApplication {
 
     app.disable('etag');
     app.use(express.static(__dirname + '/public'));
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(session({ secret: 'session secret', resave: false, saveUninitialized: false }))
     app.use(morgan('combined', { stream: logStream }));
