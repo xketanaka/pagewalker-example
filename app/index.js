@@ -10,6 +10,7 @@ const routes = [
   require('./routes/window_open_example'),
   require('./routes/ajax_example'),
   require('./routes/dialog_example'),
+  require('./routes/file_download_example'),
 ];
 
 const ActionMethods = {
@@ -23,9 +24,6 @@ const ActionMethods = {
     "/file_upload_example": (req, res)=>{
       res.renderLayout("/file_upload_example")
     },
-    "/file_download_example": (req, res)=>{
-      res.renderLayout("/file_download_example")
-    },
     "/basic_auth_example": (req, res)=>{
       res.renderLayout("/basic_auth_example")
     },
@@ -38,8 +36,8 @@ const ActionMethods = {
 };
 
 routes.forEach((methods)=>{
-  Object.assign(ActionMethods.GET, methods.GET);
-  Object.assign(ActionMethods.POST, methods.POST);
+  if(methods.GET) Object.assign(ActionMethods.GET, methods.GET);
+  if(methods.POST) Object.assign(ActionMethods.POST, methods.POST);
 });
 
 class ActionFilter {
@@ -73,6 +71,7 @@ class WebApplication {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(session({ secret: 'session secret', resave: false, saveUninitialized: false }))
     app.use(morgan('combined', { stream: logStream }));
+    app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
 
     app.use(ActionFilter.extendFilter);
