@@ -1,5 +1,6 @@
 {
   "browser": "puppeteer",
+  "scenarioDir": "test",
   "exitImmediately": false,
   "puppeteer": {
     "headless": false
