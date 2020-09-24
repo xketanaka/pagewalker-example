@@ -15,6 +15,7 @@
       <span class="label">get file as..</span>
       <label><input type="radio" name="disposition" value="attachment" checked="checked">attachment</label>
       <label><input type="radio" name="disposition" value="inline">inline</label>
+      <label><input type="radio" name="disposition" value="other-inline">other window</label>
     </div>
     <div>
       <input type="hidden" name="kind" value="pdf" >
@@ -22,7 +23,7 @@
     </div>
   </form>
 
-  <form id="png-form" action="/file_download_example/download" method="GET">
+  <form id="jpg-form" action="/file_download_example/download" method="GET">
     <h3>JPG file download</h3>
     <div>
       <span class="label">filename</span>
@@ -32,6 +33,7 @@
       <span class="label">get file as..</span>
       <label><input type="radio" name="disposition" value="attachment" checked="checked">attachment</label>
       <label><input type="radio" name="disposition" value="inline">inline</label>
+      <label><input type="radio" name="disposition" value="other-inline">other window</label>
     </div>
     <div>
       <input type="hidden" name="kind" value="jpg" >
@@ -49,6 +51,7 @@
       <span class="label">get file as..</span>
       <label><input type="radio" name="disposition" value="attachment" checked="checked">attachment</label>
       <label><input type="radio" name="disposition" value="inline">inline</label>
+      <label><input type="radio" name="disposition" value="other-inline">other window</label>
     </div>
     <div>
       <input type="hidden" name="kind" value="txt" >
@@ -56,3 +59,20 @@
     </div>
   </form>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', ()=>{
+    function parents(node, tagName){
+      return node.parentNode.tagName == tagName ? node.parentNode : parents(node.parentNode, tagName);
+    }
+    document.querySelectorAll('input[type=radio]').forEach((radio)=>{
+      radio.addEventListener('click', ()=>{
+        const form = parents(radio, "FORM");
+        if(radio.value == "other-inline"){
+          form.setAttribute('target', '_blank');
+        }else{
+          form.removeAttribute('target');
+        }
+      })
+    })
+  })
+</script>

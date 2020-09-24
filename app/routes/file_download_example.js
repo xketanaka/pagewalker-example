@@ -8,7 +8,9 @@ module.exports = {
     },
     "/file_download_example/download": (req, res)=>{
       const filename = req.query.filename || `${req.query.kind}.${req.query.kind}`;
-      res.setHeader('Content-disposition', `${req.query.disposition}; filename*=utf8''${encodeURIComponent(filename)}`);
+      const disposition = req.query.disposition == "other-inline" ? "inline" : req.query.disposition;
+
+      res.setHeader('Content-disposition', `${disposition}; filename*=utf8''${encodeURIComponent(filename)}`);
 
       let downloadFile;
       switch(req.query.kind){

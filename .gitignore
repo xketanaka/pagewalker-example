@@ -7,3 +7,6 @@
 
 /node_modules/
 /app/logs/
+/downloads/
+/screenshots/actual/
+error-screenshot.png
