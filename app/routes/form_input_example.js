@@ -55,6 +55,10 @@ module.exports = {
       const messages = [];
       if(!profile.email){
         messages.push("Please enter your email.")
+      }else{
+        if(!profile.email.includes("@")){
+          messages.push("Email is invalid format.")
+        }
       }
       if(!profile.name){
         messages.push("Please enter your name.")
