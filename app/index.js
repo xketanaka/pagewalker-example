@@ -18,6 +18,7 @@ const ActionMethods = {
     "/": (req, res)=>{
       res.renderLayout('index');
     },
+    /* TODO: routes/xxxxx.js というファイルを作成する */
     "/iframe_example": (req, res)=>{
       res.renderLayout("/iframe_example")
     },

@@ -6,12 +6,17 @@ describe("01.Form Input Example", ()=>{
   it("1. Load form input example page.", async ()=>{
     await page.load("http://localhost:3000");
 
+    assert(await page.url, "http://localhost:3000");
+
     await page.waitForPageLoad(async ()=>{
       await page.find("a").haveContent("Form input").click();
     })
   })
 
   it("2. Input invalid value.", async () =>{
+
+    assert(await page.find("input[name=sex]").first().attribute("type"), "radio");
+    assert(await page.find("input[name=interestedIn]").first().attribute("type"), "checkbox");
 
     await page.find("input[name=email]").fillIn("abc.xyz.example.com");
     await page.find("input[name=name]").fillIn("");
@@ -41,6 +46,15 @@ describe("01.Form Input Example", ()=>{
     assert(await page.find("div.message").find(elm => elm.textContent.includes("Please enter your name.") ).exist());
     assert(await page.find("div.message").find(elm => elm.textContent.includes("Email is invalid format.") ).exist());
     assert(await page.find("div.message").find(elm => elm.textContent.includes("Confirmation password does not match.") ).exist());
+
+    assert(await page.find("input[name=sex]").value(), "2")
+
+    const checked = await page.find("input[name=interestedIn]").beChecked().toArray();
+    assert(await page.find("input[name=interestedIn]").beChecked().count(), 2);
+    assert(checked.length, 2);
+    assert(await checked[0].value(), "5")
+    assert(await checked[1].value(), "6")
+    assert(await page.find("select[name=job] option").beSelected().content(), "engineer");
   });
 
   it("4. Input valid value.", async () =>{
@@ -49,6 +63,7 @@ describe("01.Form Input Example", ()=>{
     await page.find("input[name=name]").fillIn("xketanaka");
     await page.find("input[name=password]").fillIn("password.Ok");
     await page.find("input[name=passwordConfirmation]").fillIn("password.Ok");
+    await page.find("select[name=job] option").haveText("manager").select();
 
     await page.waitForPageLoad(async ()=>{
       await page.find("button[type=submit]").haveText("submit").click();
@@ -61,7 +76,7 @@ describe("01.Form Input Example", ()=>{
     assert.equal(await page.find("span.label").haveText("your name").parent().find("p").text(), "xketanaka");
     assert.equal(await page.find("span.label").haveText("password").parent().find("p").text(), "●●●●●●●●●●●");
     assert.equal(await page.find("span.label").haveText("sex").parent().find("p").text(), "female");
-    assert.equal(await page.find("span.label").haveText("your job").parent().find("p").text(), "engineer");
+    assert.equal(await page.find("span.label").haveText("your job").parent().find("p").text(), "manager");
     assert.equal(
       (await page.find("span.label").haveText("what interested in?").parent().find("p").text()).trim(),
       "movie, food"
