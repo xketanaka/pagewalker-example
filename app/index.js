@@ -7,10 +7,12 @@ const session = require('express-session');
 const routes = [
   require('./routes/login'),
   require('./routes/form_input_example'),
-  require('./routes/window_open_example'),
-  require('./routes/ajax_example'),
   require('./routes/dialog_example'),
+  require('./routes/window_open_example'),
+  require('./routes/file_upload_example'),
   require('./routes/file_download_example'),
+  require('./routes/iframe_example'),
+  require('./routes/ajax_example'),
 ];
 
 const ActionMethods = {
@@ -22,9 +24,6 @@ const ActionMethods = {
     "/iframe_example": (req, res)=>{
       res.renderLayout("/iframe_example")
     },
-    "/file_upload_example": (req, res)=>{
-      res.renderLayout("/file_upload_example")
-    },
     "/basic_auth_example": (req, res)=>{
       res.renderLayout("/basic_auth_example")
     },
@@ -32,8 +31,7 @@ const ActionMethods = {
       res.renderLayout("/managed_users")
     }
   },
-  POST: {
-  }
+  POST: {}
 };
 
 routes.forEach((methods)=>{
@@ -77,8 +75,23 @@ class WebApplication {
 
     app.use(ActionFilter.extendFilter);
     app.use(ActionFilter.loginFilter);
-    Object.keys(ActionMethods.GET).forEach((key)=>{ app.get(key, ActionMethods.GET[key]) });
-    Object.keys(ActionMethods.POST).forEach((key)=>{ app.post(key, ActionMethods.POST[key]) });
+    // Bind action
+    Object.keys(ActionMethods.GET).forEach((key)=>{
+      let action = ActionMethods.GET[key];
+      if (Array.isArray(action)) {
+        app.get(key, ...action);
+      } else {
+        app.get(key, action);
+      }
+    });
+    Object.keys(ActionMethods.POST).forEach((key)=>{
+      let action = ActionMethods.POST[key];
+      if (Array.isArray(action)) {
+        app.post(key, ...action)
+      } else {
+        app.post(key, action)
+      }
+    });
   }
   static start(){
     this.app.listen(this.port, ()=>{
