@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>This is a page In iframe</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="/stylesheets/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="main" style="margin-left: 0">
+    <h1>This is a page In iframe</h1>
+    <div class="content">
+      <% if (params) { %>
+        <div>
+          <span class="label">text field</span>
+          <input type="text" class="long" value="<%= params.field %>" disabled>
+        </div>
+        <div>
+          <span class="label">other text field</span>
+          <input type="text" class="long" value="<%= params.other_field %>" disabled>
+        </div>
+        <div style="margin-top: 25px">
+          <a href="/iframe_example/inframe" class="btn btn-default" >back</a>
+        </div>
+      <% } else { %>
+      <form action="/iframe_example/inframe" method="POST" >
+        <div>
+          <span class="label">text field</span>
+          <input type="text" class="long" name="field" value="">
+        </div>
+        <div>
+          <span class="label">other text field</span>
+          <input type="text" class="long" name="other_field" value="">
+        </div>
+        <div style="margin-top: 25px">
+          <button type="submit" class="btn-primary" >submit</button>
+        </div>
+      </form>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
