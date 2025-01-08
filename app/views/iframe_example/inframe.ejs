@@ -12,11 +12,11 @@
       <% if (params) { %>
         <div>
           <span class="label">text field</span>
-          <input type="text" class="long" value="<%= params.field %>" disabled>
+          <input name="field" type="text" class="long" value="<%= params.field %>" disabled>
         </div>
         <div>
           <span class="label">other text field</span>
-          <input type="text" class="long" value="<%= params.other_field %>" disabled>
+          <textarea name="area" cols="80" rows="5" disabled><%= params.area %></textarea>
         </div>
         <div style="margin-top: 25px">
           <a href="/iframe_example/inframe" class="btn btn-default" >back</a>
@@ -28,8 +28,8 @@
           <input type="text" class="long" name="field" value="">
         </div>
         <div>
-          <span class="label">other text field</span>
-          <input type="text" class="long" name="other_field" value="">
+          <span class="label">text area</span>
+          <textarea name="area" cols="80" rows="5"></textarea>
         </div>
         <div style="margin-top: 25px">
           <button type="submit" class="btn-primary" >submit</button>
