@@ -68,4 +68,11 @@ describe("03.Ajax Example", ()=>{
     })
     assert(await page.find('#ajax-result h4').haveContent(expectedContent).exist());
   });
+
+  it("8. clear All after reload", async () =>{
+
+    await page.reload();
+
+    assert(await page.find('#ajax-result h4').notExist())
+  })
 });

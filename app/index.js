@@ -13,16 +13,13 @@ const routes = [
   require('./routes/file_download_example'),
   require('./routes/iframe_example'),
   require('./routes/ajax_example'),
+  require('./routes/table_example'),
 ];
 
 const ActionMethods = {
   GET: {
     "/": (req, res)=>{
       res.renderLayout('index');
-    },
-    /* TODO: routes/xxxxx.js というファイルを作成する */
-    "/iframe_example": (req, res)=>{
-      res.renderLayout("/iframe_example")
     },
     "/basic_auth_example": (req, res)=>{
       res.renderLayout("/basic_auth_example")
