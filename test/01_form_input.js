@@ -24,6 +24,7 @@ describe("01.Form Input Example", ()=>{
     await page.find("input[name=passwordConfirmation]").fillIn("password2");
     await page.find("input[name=sex]").haveValue("1").chooseRadioButton();
     await page.find("input[name=sex]").haveValue("2").chooseRadioButton();
+    await page.find("select[name=birthMonth]").choose("August");
     await page.find("select[name=job]").selectOption("sales");
     await page.find("select[name=job]").selectOption("engineer");
     await page.find("input[name=interestedIn]").haveValue("1").check();
@@ -76,6 +77,7 @@ describe("01.Form Input Example", ()=>{
     assert.equal(await page.find("span.label").haveText("your name").parent().find("p").text(), "xketanaka");
     assert.equal(await page.find("span.label").haveText("password").parent().find("p").text(), "●●●●●●●●●●●");
     assert.equal(await page.find("span.label").haveText("sex").parent().find("p").text(), "female");
+    assert.equal(await page.find("span.label").haveText("birthday month").parent().find("p").text(), "August");
     assert.equal(await page.find("span.label").haveText("your job").parent().find("p").text(), "manager");
     assert.equal(
       (await page.find("span.label").haveText("what interested in?").parent().find("p").text()).trim(),

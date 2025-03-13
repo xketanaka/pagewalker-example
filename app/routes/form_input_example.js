@@ -18,6 +18,21 @@ const Constant = {
     "5": "movie",
     "6": "food",
     "7": "healthtech",
+  },
+
+  Month: {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December",
   }
 }
 
@@ -30,6 +45,7 @@ module.exports = {
         password: req.body.password,
         passwordConfirmation: req.body.passwordConfirmation,
         sex: req.body.sex,
+        birthMonth: req.body.birthMonth,
         job: req.body.job,
         interestedIn: req.body.interestedIn,
         selfIntroduction: req.body.selfIntroduction
@@ -48,6 +64,7 @@ module.exports = {
         password: req.body.password,
         passwordConfirmation: req.body.passwordConfirmation,
         sex: req.body.sex,
+        birthMonth: req.body.birthMonth,
         job: req.body.job,
         interestedIn: req.body.interestedIn,
         selfIntroduction: req.body.selfIntroduction

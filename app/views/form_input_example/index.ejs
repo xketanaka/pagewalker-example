@@ -28,6 +28,15 @@
       <label><input type="radio" name="sex" value="2" <%= profile.sex == "2" ? "checked" : "" %> >female</label>
     </div>
     <div>
+      <span class="label">birthday month</span>
+      <select name="birthMonth">
+        <option>please select</option>
+        <% for (let month = 1; month <= 12; month++){ %>
+        <option value="<%= month %>" <%= profile.birthMonth == month ? "selected" : "" %> ><%= params.Constant.Month[month] %></option>
+        <% } %>
+      </select>
+    </div>
+    <div>
       <span class="label">your job</span>
       <select name="job">
         <option>please select</option>
