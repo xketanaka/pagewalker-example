@@ -27,7 +27,7 @@ describe("06.File Upload Example", ()=>{
 
     assert.equal(await page.find('h3 + ul > li').count(), 0);
 
-    let file = await page.waitForPageLoad(async ()=>{
+    await page.waitForPageLoad(async ()=>{
       await page.find('input[type=file]').attachFile(path.join(__dirname, './fixtures/upload_file.pdf'));
       await page.find("form button").click();
     })

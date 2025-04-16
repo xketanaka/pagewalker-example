@@ -12,12 +12,13 @@ describe("07.Iframe Example", ()=>{
     await page.waitForPageLoad(async ()=>{
       await page.find("a").haveContent("Iframe").click();
     })
-  })
-
-  it("2. Inspect iframe", async ()=>{
 
     const iframePage = page.inIframe(page.find('iframe').first());
     await iframePage.waitForPageLoad();
+  })
+
+  it("2. Inspect iframe", async ()=>{
+    const iframePage = page.inIframe(page.find('iframe').first());
 
     await iframePage.waitForPageLoad(async ()=>{
       await iframePage.find("input[name=field]").setValue("some value one");
