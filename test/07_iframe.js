@@ -43,4 +43,16 @@ describe("07.Iframe Example", ()=>{
     assert.equal(await page.inIframe(iframeFinder).find("input[name=field]").find(elm => elm.disabled == true).count(), 0);
     assert.equal(await page.inIframe(iframeFinder).find("textarea[name=area]").find(elm => elm.disabled == true).count(), 0);
   });
+
+  it("4. Ajax in iframe", async ()=>{
+    const iframePage = await page.inIframe(page.find('iframe').first())
+
+    await iframePage.waitForAjaxDone(async ()=>{
+      await iframePage.find("input[name=field]").setValue("input value");
+      await iframePage.find("#submit-on-ajax").click();
+    })
+
+    let responseText = await iframePage.find("pre").content();
+    assert(responseText.includes("OK: INPUT VALUE"));
+  });
 })
