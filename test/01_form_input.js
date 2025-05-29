@@ -18,7 +18,7 @@ describe("01.Form Input Example", ()=>{
     assert(await page.find("input[name=sex]").first().attribute("type"), "radio");
     assert(await page.find("input[name=interestedIn]").first().attribute("type"), "checkbox");
 
-    await page.find("input[name=email]").fillIn("abc.xyz.example.com");
+    await page.find("span.label").haveText("your email").parent().find("input").fillIn("abc.xyz.example.com");
     await page.find("input[name=name]").fillIn("");
     await page.find("input[name=password]").fillIn("password1");
     await page.find("input[name=passwordConfirmation]").fillIn("password2");
