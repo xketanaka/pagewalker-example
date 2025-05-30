@@ -23,10 +23,22 @@ describe("08.Table Example", ()=>{
     for (let i = 1; i <= 8; i++) {
       await page.find(`tbody tr:nth-child(${i}) input[type=number]`).setValue(i);
     }
-    
+
     await page.find(`form input[type=submit]`).click();
     await page.waitForPageLoad();
 
     assert(await page.find('tbody td:nth-child(3)').every(el => parseInt(el.textContent.trim()) > 0 ));
   });
+  it("3. Dom operation", async ()=>{
+    await page.find('td').haveContent("Apple").parent().find("input[type=number]").fillIn("10");
+    await page.find('td').haveContent("Orange").parent().find("input[type=number]").fillIn("20");
+
+    await page.find(`input[type=submit]`).valueMatch(/apply/).click();
+    await page.waitForPageLoad();
+
+    assert.strictEqual(await page.find('td').textMatch(/Apple/).closest("tr").find("td:nth-child(3)").text(), "10");
+    assert.strictEqual(await page.find('td').textMatch(/Orange/).closest("tr").find("td:nth-child(3)").text(), "20");
+    assert.strictEqual(await page.find('td').textMatch(/Pea/).count(), 2);
+    assert.strictEqual(await page.find('td').find(`td => td.textContent.match(/Pea/)`).count(), 2);
+  })
 })
