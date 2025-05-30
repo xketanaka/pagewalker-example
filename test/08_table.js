@@ -41,9 +41,9 @@ describe("08.Table Example", ()=>{
     assert.strictEqual(await page.find('td').textMatch(/Orange/).closest("tr").find("td:nth-child(3)").text(), "20");
     assert.strictEqual(await page.find('td').textMatch(/Banana/).closest("tr").find("td:nth-child(3)").text(), "100");
     assert.strictEqual(await page.find('td').textMatch(/Pea/).count(), 2);
-    assert.strictEqual(await page.find('td').textInclude("Pea").count(), 2);
+    assert.strictEqual(await page.find('td').textIncludes("Pea").count(), 2);
     assert.strictEqual(await page.find('td').find(`td => td.textContent.match(/Pea/)`).count(), 2);
-    assert.strictEqual(await page.find('input').valueInclude("10").count(), 2);
+    assert.strictEqual(await page.find('input').valueIncludes("10").count(), 2);
     assert.strictEqual(await page.find('input').haveValue("10").count(), 1);
   })
 })
