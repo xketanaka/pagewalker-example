@@ -96,4 +96,37 @@ describe("01.Form Input Example", ()=>{
 
     assert(await page.find("h1").haveText("Registration Completed").exist());
   });
+
+  it("7. If object is missing, Failed or not.", async () => {
+    assert(await page.url, "http://localhost:3000");
+    await page.waitForPageLoad(async ()=>{
+      await page.find("a").haveContent("Form input").click();
+    })
+
+    try {
+      await page.find("input[name=missing]").fillIn("test");
+      assert.fail("Should throw error, but not thrown.");
+    }catch(e) {
+      assert(e.message.includes("Element not found"));
+    }
+
+    try {
+      await page.find("input[name=missing]").value();
+    }catch(e) {
+      assert.fail("should not throw error, but thrown.");
+    }
+
+    try {
+      await page.find("button.missing").click();
+      assert.fail("Should throw error, but not thrown.");
+    }catch(e) {
+      assert(e.message.includes("Element not found"));
+    }
+
+    try {
+      await page.find("button.missing").exist();
+    }catch(e) {
+      assert.fail("should not throw error, but thrown.");
+    }
+  })
 });
