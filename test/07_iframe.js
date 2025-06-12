@@ -26,22 +26,34 @@ describe("07.Iframe Example", ()=>{
       await iframePage.find("form button").click();
     })
 
-    assert.equal(await iframePage.find("input[name=field]").value(), 'some value one')
-    assert.equal(await iframePage.find("textarea[name=area]").content(), 'some content two')
+    assert.strictEqual(await iframePage.find("input[name=field]").value(), 'some value one')
+    assert.strictEqual(await iframePage.find("textarea[name=area]").content(), 'some content two')
   });
 
   it("3. Inspect iframe through finder", async ()=>{
     const iframeFinder = page.find('iframe').first();
 
-    assert.equal(await page.inIframe(iframeFinder).find("input[name=field]").find(elm => elm.disabled == true).count(), 1);
-    assert.equal(await page.inIframe(iframeFinder).find("textarea[name=area]").find(elm => elm.disabled == true).count(), 1);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").find(elm => elm.disabled == true).count(), 1);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").find(elm => elm.disabled == true).count(), 1);
+
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").haveAttribute('disabled').count(), 1);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").haveAttribute('disabled').count(), 1);
+
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").haveAttribute('disabled', '').count(), 1);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").haveAttribute('disabled', '').count(), 1);
 
     await page.inIframe(iframeFinder).waitForPageLoad(async ()=>{
       await page.inIframe(iframeFinder).find("a").haveText('back').click();
     })
 
-    assert.equal(await page.inIframe(iframeFinder).find("input[name=field]").find(elm => elm.disabled == true).count(), 0);
-    assert.equal(await page.inIframe(iframeFinder).find("textarea[name=area]").find(elm => elm.disabled == true).count(), 0);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").find(elm => elm.disabled == true).count(), 0);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").find(elm => elm.disabled == true).count(), 0);
+
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").notHaveAttribute('disabled', '').count(), 2);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").notHaveAttribute('disabled', '').count(), 1);
+
+    assert.strictEqual(await page.inIframe(iframeFinder).find("input[name=field]").notHaveAttribute('disabled').count(), 2);
+    assert.strictEqual(await page.inIframe(iframeFinder).find("textarea[name=area]").notHaveAttribute('disabled').count(), 1);
   });
 
   it("4. Ajax in iframe", async ()=>{
